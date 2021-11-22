@@ -1,10 +1,17 @@
-# mine.js(Developing)
-Minecraft Java Edition Scripting with JS(V8 Engine) by Netherald
+<div align="center">
+
+![](https://avatars.githubusercontent.com/u/94840691?s=200&v=4)
+
+# Mine.js(W-I-P)
+
+Minecraft Bukkit Scripting with JS by Netherald
+</div>
+
 ## How to apply?
 Download Paper or Bungee Version. and put it to plugins folder.\
 Script folder is `plugins/js`!
 ## How to build?
-Run build task of Bukkit or Bungee Submodule!
+Run build task of Bukkit or Bungee module!
 ## How to use?
 [Wiki](http://netherald.org:3000)
 ### Example code
