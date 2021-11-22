@@ -2,6 +2,8 @@
 
 ![](https://avatars.githubusercontent.com/u/94840691?s=200&v=4)
 
+![](https://img.shields.io/github/stars/mine-js/mine.js?style=for-the-badge) ![](https://img.shields.io/github/forks/mine-js/mine.js?style=for-the-badge)
+
 # Mine.js(W-I-P)
 
 Minecraft Bukkit Scripting with JS by Netherald
