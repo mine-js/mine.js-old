@@ -2,7 +2,7 @@
 
 ![](https://avatars.githubusercontent.com/u/94840691?s=200&v=4)
 
-![](https://img.shields.io/github/stars/mine-js/mine.js?style=for-the-badge) ![](https://img.shields.io/github/forks/mine-js/mine.js?style=for-the-badge) ![](https://img.shields.io/discord/912313035639627806?style=for-the-badge)
+![](https://img.shields.io/github/stars/mine-js/mine.js?style=for-the-badge) ![](https://img.shields.io/github/forks/mine-js/mine.js?style=for-the-badge) [![](https://img.shields.io/discord/912313035639627806?label=discord&style=for-the-badge)](https://discord.gg/ngpsJ4Sfmb)
 
 # Mine.js(W-I-P)
 
