@@ -2,7 +2,7 @@ package org.netherald.minejs.common
 
 import com.eclipsesource.v8.*
 import java.io.File
-import java.lang.UnsupportedOperationException
+
 
 object ScriptLoader {
 
@@ -52,9 +52,21 @@ object ScriptLoader {
         }
     }
 
+    fun invokeEvent(name: String, v8Object: V8Object) {
+        for (runtime in runtimes) {
+            try {
+                runtime.value.executeVoidFunction(name, V8Array(runtime.value).push(v8Object))
+            } catch(e: V8ScriptExecutionException) {
+                if(!e.jsMessage.startsWith("TypeError: undefined")) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
     var alreadyLoadStorage = false
 
-    fun load(scriptDirectory: File, storageFile: File, platform: Platform, playerManager: PlayerManager, itemManager: ItemManager, console: Console, commandManager: CommandManager, timeout: Timeout) {
+    fun load(scriptDirectory: File, storageFile: File, platform: Platform, playerManager: PlayerManager, itemManager: ItemManager, communicationManager: CommunicationManager, console: Console, commandManager: CommandManager, timeout: Timeout) {
         if(scriptDirectory.isDirectory) {
             val files = scriptDirectory.listFiles()
             files.sort()
@@ -75,6 +87,23 @@ object ScriptLoader {
 
                     val consoleObject = V8Object(runtime)
                     val storageObject = V8Object(runtime)
+
+                    runtime.registerJavaMethod(JavaVoidCallback { receiver, parameters ->
+                        val list = ArrayList<Any>()
+                        for(i in 0 until parameters.length()) {
+                            if(i == 0) continue
+                            if(parameters[i] is String)
+                                list.add(parameters.getString(i))
+                            else if(parameters[i] is Int)
+                                list.add(parameters.getInteger(i))
+                            else if(parameters[i] is Double)
+                                list.add(parameters.getDouble(i))
+                            else if(parameters[i] is Boolean)
+                                list.add(parameters.getBoolean(i))
+                        }
+                        println("Length: ${list.size}")
+                        communicationManager.tryCommunicate(parameters[0] as String, list)
+                    }, "communicate")
 
                     runtime.add("console", consoleObject)
                     runtime.add("storage", storageObject)

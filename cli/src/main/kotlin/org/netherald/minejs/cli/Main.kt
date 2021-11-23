@@ -11,6 +11,7 @@ import kotlin.collections.ArrayList
 
 lateinit var commands: ArrayList<Command>
 
+/*
 fun main() {
     println("Loading scripts(${File(System.getProperty("user.dir") + File.separator + "scripts").absolutePath})...")
     ScriptLoader.load(File(System.getProperty("user.dir") + File.separator + "scripts"), File(System.getProperty("user.dir") + File.separator + "scripts${File.separator}storage.json"), Platform.CLI, PlayerManagerImpl(),ItemManagerImpl() ,ConsoleImpl(), CommandManagerImpl())
@@ -71,6 +72,8 @@ fun main() {
         }
     }
 }
+
+ */
 
 fun createObjectForPlayer(player: Player, runtime: V8) : V8Object {
     val res = V8Object(runtime)

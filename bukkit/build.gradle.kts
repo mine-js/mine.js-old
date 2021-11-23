@@ -9,6 +9,7 @@ repositories {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":api"))
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT")

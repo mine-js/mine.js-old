@@ -1,0 +1,6 @@
+name: ApiTest
+version: 1.0.0
+main: org.netherald.minejs.test.api.ApiTestPlugin
+api-version: 1.17
+depend:
+  - MineJS
