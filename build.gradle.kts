@@ -1,22 +1,16 @@
 plugins {
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.5.21"
 }
 
 allprojects {
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-    
-    java {
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(16))
-        }
-    }
-
     repositories {
         mavenCentral()
     }
 }
 
 subprojects {
+    apply(plugin="org.jetbrains.kotlin.jvm")
+
     dependencies {
         implementation(kotlin("stdlib"))
     }
