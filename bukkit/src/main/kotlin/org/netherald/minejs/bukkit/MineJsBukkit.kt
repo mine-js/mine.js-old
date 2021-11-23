@@ -1,5 +1,6 @@
 package org.netherald.minejs.bukkit
 
+import com.comphenix.protocol.ProtocolManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import org.netherald.minejs.bukkit.command.MineJSCommand
@@ -8,16 +9,15 @@ import org.netherald.minejs.bukkit.event.BlockListener
 import org.netherald.minejs.bukkit.event.EntityListener
 import org.netherald.minejs.bukkit.event.MiscListener
 import org.netherald.minejs.bukkit.event.PlayerListener
-import org.netherald.minejs.bukkit.impl.CommandManagerImpl
-import org.netherald.minejs.bukkit.impl.ConsoleImpl
-import org.netherald.minejs.bukkit.impl.ItemManagerImpl
-import org.netherald.minejs.bukkit.impl.PlayerManagerImpl
+import org.netherald.minejs.bukkit.impl.*
+import org.netherald.minejs.bukkit.utils.ProtocolUtil
 import org.netherald.minejs.common.Platform
 import org.netherald.minejs.common.ScriptLoader
 import java.io.File
 
-class
-MineJsBukkit : JavaPlugin() {
+var protocolEnabled = false
+
+class MineJsBukkit : JavaPlugin() {
 
     val scriptsDir = File("plugins${File.separator}scripts")
 
@@ -25,10 +25,16 @@ MineJsBukkit : JavaPlugin() {
         Bukkit.getPluginManager().registerEvents(PlayerListener(this), this)
         Bukkit.getPluginManager().registerEvents(EntityListener(), this)
         Bukkit.getPluginManager().registerEvents(BlockListener(), this)
-        Bukkit.getPluginManager().registerEvents(MiscListener(), this)
+        Bukkit.getPluginManager().registerEvents(MiscListener(this), this)
 
         getCommand("minejs")!!.setExecutor(MineJSCommand(this))
         getCommand("minejs")!!.tabCompleter = MineJSTabCompleter()
+
+        protocolEnabled = Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")
+        if(protocolEnabled)
+            ProtocolUtil.init()
+        else
+            logger.warning("You may not use packet feature. Install ProtocolLib to use packet feature!")
 
         logger.info("Loading scripts...")
         if(!scriptsDir.exists())
@@ -36,8 +42,13 @@ MineJsBukkit : JavaPlugin() {
         load()
     }
 
+    override fun onDisable() {
+        ScriptLoader.unload()
+    }
+
     fun load() {
-        ScriptLoader.load(scriptsDir, File(scriptsDir, "storage.json"), Platform.BUKKIT, PlayerManagerImpl(), ItemManagerImpl(), ConsoleImpl(this), CommandManagerImpl(this))
+        Bukkit.getScheduler().cancelTasks(this)
+        ScriptLoader.load(scriptsDir, File(scriptsDir, "storage.json"), Platform.BUKKIT, PlayerManagerImpl(), ItemManagerImpl(), ConsoleImpl(this), CommandManagerImpl(this), TimeoutImpl(this))
     }
 
 }

@@ -4,11 +4,13 @@ plugins {
 
 repositories {
     maven { url = uri("https://papermc.io/repo/repository/maven-public/") }
+    maven("https://repo.dmulloy2.net/repository/public/")
 }
 
 dependencies {
     implementation(project(":common"))
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:4.7.0")
     implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT")
     implementation("com.eclipsesource.j2v8:j2v8:6.2.0")
     implementation("com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0")
