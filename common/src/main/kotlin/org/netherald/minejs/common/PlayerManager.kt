@@ -15,4 +15,6 @@ interface PlayerManager {
 
     fun worldOf(runtime: V8, name: String): V8Object
 
+    fun locationOf(runtime: V8, parameters: V8Array): V8Object
+
 }
