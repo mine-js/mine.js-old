@@ -171,6 +171,12 @@ object ScriptLoader {
                             return@JavaCallback null
                     }, "playerOf")
                     runtime.registerJavaMethod(JavaCallback { receiver, parameters ->
+                        if(parameters.length() > 0)
+                            return@JavaCallback playerManager.worldOf(runtime, parameters[0] as String)
+                        else
+                            return@JavaCallback null
+                    }, "worldOf")
+                    runtime.registerJavaMethod(JavaCallback { receiver, parameters ->
                         if (parameters.length() > 0)
                             return@JavaCallback itemManager.itemOf(runtime,parameters[0] as String)
                         else

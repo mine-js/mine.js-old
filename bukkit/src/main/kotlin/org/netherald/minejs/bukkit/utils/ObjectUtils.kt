@@ -315,6 +315,10 @@ object ObjectUtils {
                 if(parameters.length() > 0)
                     entity.velocity = fromV8Vector(parameters[0] as V8Object, runtime)
             }, "setVelocity")
+            registerJavaMethod({ receiver, parameters ->
+                if(parameters.length() > 0)
+                    entity.teleport(fromV8Location(parameters[0] as V8Object, runtime))
+            }, "teleport")
         }
     }
 

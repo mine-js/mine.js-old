@@ -4,9 +4,11 @@ import com.eclipsesource.v8.V8
 import com.eclipsesource.v8.V8Array
 import com.eclipsesource.v8.V8Object
 import org.bukkit.Bukkit
+import org.netherald.minejs.bukkit.utils.ObjectUtils
 import org.netherald.minejs.bukkit.utils.ObjectUtils.createPlayerObject
 import org.netherald.minejs.common.PlayerManager
 import java.lang.UnsupportedOperationException
+import java.util.*
 
 class PlayerManagerImpl : PlayerManager {
 
@@ -27,7 +29,20 @@ class PlayerManagerImpl : PlayerManager {
 
     override fun playerOf(runtime: V8, name: String): V8Object {
         val player = Bukkit.getPlayer(name)
-        return if (player != null) V8Object(runtime).apply(createPlayerObject(player, runtime))
-            else V8Object(runtime)
+        return if(player != null) {
+            V8Object(runtime).apply(createPlayerObject(player, runtime))
+        } else {
+            val player2 = Bukkit.getPlayer(UUID.fromString(name))
+            if(player2 != null) {
+                V8Object(runtime).apply(createPlayerObject(player2, runtime))
+            } else {
+                V8Object(runtime)
+            }
+        }
+    }
+
+    override fun worldOf(runtime: V8, name: String): V8Object {
+        val world = Bukkit.getWorld(name)
+        return if(world != null) V8Object(runtime).apply(ObjectUtils.createWorldObject(world, runtime)) else V8Object(runtime)
     }
 }
